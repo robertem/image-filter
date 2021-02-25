@@ -1,6 +1,7 @@
 import express, {Request, Response} from 'express';
 import bodyParser from 'body-parser';
 import {filterImageFromURL, deleteLocalFiles} from './util/util';
+import { requireAuth } from './security/auth';
 
 (async () => {
 
@@ -31,7 +32,7 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
 
   //! END @TODO1
 
-  app.get("/filteredimage", async (req: Request, res: Response) => {
+  app.get("/filteredimage", requireAuth, async (req: Request, res: Response) => {
     const imageUrl = req.query.image_url;
 
     if (!imageUrl) {
