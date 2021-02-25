@@ -86,6 +86,16 @@
 			"response": []
 		}
 	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{TOKEN}}",
+				"type": "string"
+			}
+		]
+	},
 	"event": [
 		{
 			"listen": "prerequest",
@@ -109,8 +119,11 @@
 	"variable": [
 		{
 			"key": "HOST",
-			"value": "localhost:8082",
-			"type": "string"
+			"value": "localhost:8082"
+		},
+		{
+			"key": "TOKEN",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.EMXV6Dr45FiPlIMxhKvsBTeBg2mRMUgYB7G88LAd_Hs"
 		}
 	]
 }
