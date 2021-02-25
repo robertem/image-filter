@@ -1,6 +1,7 @@
-import express from 'express';
+import express, {Request, Response} from 'express';
 import bodyParser from 'body-parser';
 import {filterImageFromURL, deleteLocalFiles} from './util/util';
+import { requireAuth } from './security/auth';
 
 (async () => {
 
@@ -30,6 +31,28 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
   /**************************************************************************** */
 
   //! END @TODO1
+
+  app.get("/filteredimage", requireAuth, async (req: Request, res: Response) => {
+    const imageUrl = req.query.image_url;
+
+    if (!imageUrl) {
+      return res.status(422).send({ message: "image_url param is required" });
+    }
+
+    const filterImageResult = await filterImageFromURL(imageUrl);
+    
+    if (!filterImageResult.ok) {
+      return res.status(422).send({ message: "Invalid image URL" });
+    }
+
+    res.status(200).sendFile(filterImageResult.imageUrl, (err) => {
+      if (err) {
+        res.status(500).send({ message: "Error retrieving file" })
+      }
+
+      deleteLocalFiles([filterImageResult.imageUrl]);
+    });
+  });
   
   // Root Endpoint
   // Displays a simple message to the user
