@@ -119,7 +119,7 @@
 	"variable": [
 		{
 			"key": "HOST",
-			"value": "localhost:8082"
+			"value": "image-filter-robertem-dev.us-east-1.elasticbeanstalk.com"
 		},
 		{
 			"key": "TOKEN",
