@@ -34,7 +34,19 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
   app.get("/filteredimage", async (req: Request, res: Response) => {
     const { image_url } = req.query;
 
-    res.sendStatus(200);
+    if (!image_url) {
+      return res.status(422).send({ message: "image_url param is required" });
+    }
+
+    const localImagePath = await filterImageFromURL(image_url);
+    
+    res.status(200).sendFile(localImagePath, (err) => {
+      if (err) {
+        res.status(500).send({ message: "error retrieving file" })
+      }
+
+      deleteLocalFiles([localImagePath]);
+    });
   });
   
   // Root Endpoint
