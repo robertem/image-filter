@@ -84,6 +84,53 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "/api/v0/feed valid image URL for feed",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test(\"The post returns a new item with an id\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.id).to.not.eql(null);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"caption\": \"cat\",\n    \"url\": \"https://upload.wikimedia.org/wikipedia/commons/b/bd/Golden_tabby_and_white_kitten_n01.jpg\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{REST_API_HOST}}/api/v0/feed",
+					"protocol": "http",
+					"host": [
+						"{{REST_API_HOST}}"
+					],
+					"path": [
+						"api",
+						"v0",
+						"feed"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"auth": {
@@ -119,11 +166,15 @@
 	"variable": [
 		{
 			"key": "HOST",
-			"value": "localhost:8082"
+			"value": "image-filter-robertem-dev.us-east-1.elasticbeanstalk.com"
 		},
 		{
 			"key": "TOKEN",
 			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.EMXV6Dr45FiPlIMxhKvsBTeBg2mRMUgYB7G88LAd_Hs"
+		},
+		{
+			"key": "REST_API_HOST",
+			"value": "udagram-robertem-dev.us-east-1.elasticbeanstalk.com"
 		}
 	]
 }
